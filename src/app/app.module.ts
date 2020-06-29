@@ -32,3 +32,39 @@ import { QueryParamSyncModule } from "./query-param-sync/query-param-sync.module
   bootstrap: [AppComponent]
 })
 export class AppModule {}
+
+/* 
+Going forward:
+- QueryParamSyncModule.forRoot({
+  paging: {
+    serialize: pagingSerializer,
+    deserialize: pagingDeserializer
+  },
+  sorting: {
+    serialize: sortingSerializer,
+    deserialize: sortingDeserializer
+  }
+})
+- QueryParamSyncModule.forChild({
+  jobListArgs: {
+    serialize: jobListArgsSerializer,
+    deserialize: jobListArgsDeserializer
+  }
+})
+- providers: [
+  queryParamSync({
+    dates: {
+      serialize: dateSerializer,
+      deserialize: dateDeserializer,
+    }
+  })
+]
+- Wait for all synchronizers to resolve (so only 1 query to back-end)
+- Hook up the service that listens to route and makes API call
+- Put all into separate library
+- Write tests
+- Publish to npm
+- write article about it
+- submit articles
+*/
+
