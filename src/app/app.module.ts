@@ -8,7 +8,7 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { CustomInputComponent } from "./custom-input/custom-input.component";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from "@angular/material/input";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { QueryParamSyncModule } from "./query-param-sync/query-param-sync.module";
 
@@ -25,10 +25,7 @@ import { QueryParamSyncModule } from "./query-param-sync/query-param-sync.module
     BrowserAnimationsModule,
     QueryParamSyncModule
   ],
-  declarations: [
-    AppComponent,
-    CustomInputComponent
-  ],
+  declarations: [AppComponent, CustomInputComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
@@ -67,4 +64,3 @@ Going forward:
 - write article about it
 - submit articles
 */
-
