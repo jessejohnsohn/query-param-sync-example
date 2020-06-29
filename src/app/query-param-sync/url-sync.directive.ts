@@ -47,12 +47,6 @@ const serializers = {
 
 @Directive({
   selector: "[urlSync]"
-  // providers: [
-  //   {
-  //     provide: FormControlDirective,
-  //     useClass: FormControlDirective
-  //   }
-  // ]
 })
 export class UrlSyncDirective extends FormControlDirective implements OnInit {
   private _subscription: Subscription;
@@ -68,8 +62,9 @@ export class UrlSyncDirective extends FormControlDirective implements OnInit {
     }
   }
 
+  form = new FormControl('');
+
   constructor(
-    // private readonly serializers: any,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
     private readonly el: ElementRef,
@@ -79,17 +74,12 @@ export class UrlSyncDirective extends FormControlDirective implements OnInit {
     private readonly controls: ControlValueAccessor[]
   ) {
     super([], [], controls, "");
-    this.form = new FormControl('');
-    console.log(controls);
     if (controls) {
       this.valueAccessor = selectValueAccessor(this, this.controls);
-      console.log(this.valueAccessor)
-      for (let ctrl of controls) {
-        const changeFn = ctrl.registerOnChange.bind(ctrl);
-        ctrl.registerOnChange = (fn: any) => {
+        const changeFn = this.valueAccessor.registerOnChange.bind(this.valueAccessor);
+        this.valueAccessor.registerOnChange = (fn: any) => {
           const f = (val: any) => {
             const value = serializers[this.paramName].serialize(val);
-            console.log(value)
             this.router.navigate([], {
               queryParams: { ...value },
               queryParamsHandling: "merge"
@@ -99,29 +89,7 @@ export class UrlSyncDirective extends FormControlDirective implements OnInit {
           changeFn(f);
         };
         this.ngOnChanges({ form: new SimpleChange("", this.form, false) });
-      }
     }
-    // console.log(control);
-    // if (control.valueAccessor) {
-    //   const changeFn = control.valueAccessor.registerOnChange.bind(control);
-    //   control.valueAccessor.registerOnChange = (fn: any) => {
-    //     const f = (val: any) => {
-    //       console.log("changed");
-    //       const value = serializers[this.paramName].serialize(val);
-    //       this.router.navigate([], {
-    //         queryParams: { ...value },
-    //         queryParamsHandling: "merge"
-    //       });
-    //       fn(val);
-    //     };
-    //     changeFn(f);
-    //   };
-    //   // control.form = control.form ? control.form : new FormControl("");
-    //   // console.log(control.form)
-    //   // control.ngOnChanges({
-    //   //   form: new SimpleChange(null, null, true)
-    //   // });
-    // }
   }
 
   ngOnInit() {
@@ -130,14 +98,8 @@ export class UrlSyncDirective extends FormControlDirective implements OnInit {
         .pipe(map(params => serializers[this.paramName].deserialize(params)))
         .subscribe(paramValue => {
           if (this.controls) {
-            const control = selectValueAccessor(this, this.controls);
-            control.writeValue(paramValue);
-            // console.log(paramValue)
-            // this.control.valueAccessor.writeValue(paramValue);
-            // console.log(paramValue);
-            // for (let ctrl of this.controls) {
-            //   ctrl.writeValue(paramValue);
-            // }
+            this.valueAccessor.writeValue(paramValue);
+           
           } else {
             this.renderer.setProperty(
               this.el.nativeElement,

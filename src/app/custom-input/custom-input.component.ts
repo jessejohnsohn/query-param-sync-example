@@ -28,7 +28,6 @@ export class CustomInputComponent {
   }
 
   registerOnChange(fn: (val: any) => void) {
-    console.log('registered in custom component');
     this.form.valueChanges.subscribe(fn);
   }
 
