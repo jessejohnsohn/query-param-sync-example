@@ -23,7 +23,7 @@ export class CustomInputComponent {
 
   writeValue(value: any) {
     if (value) {
-      this.form.patchValue(value);
+      this.form.patchValue(value, { emitEvent: false });
     }
   }
 
