@@ -60,7 +60,4 @@ Going forward:
 - Hook up the service that listens to route and makes API call
 - Put all into separate library
 - Write tests
-- Publish to npm
-- write article about it
-- submit articles
 */
